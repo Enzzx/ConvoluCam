@@ -1,0 +1,3 @@
+[submodule "core_c"]
+	path = core_c
+	url = https://github.com/Enzzx/ConvoluC.git
