@@ -54,7 +54,7 @@ while True:
     cv2.imshow(f"Webcam", new_frame)
 
     key = cv2.waitKeyEx(1)
-    if key in [2490368, 65362]: # top
+    if key in [2490368, 65362]: # up
         if kernel_h.size <= 45:
             kernel_h.size += 5
 
