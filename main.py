@@ -1,11 +1,11 @@
-import ctypes, cv2, numpy as np, time
+import ctypes, cv2, numpy as np, time, sys
 from pathlib import Path
 import my_types as mt, compile
 
 filters = ["ColorShift", "NegativeColor", "GreyScale", "SobelEdge", "LaplacianEdge", "Emboss", "Identity", "Blur", "Uniform", "MotionBlur", "Sharpen"]
 
 # compilando
-path = "./core_c/image_processor.dll"
+path = "./core_c/image_processor.dll" if sys.platform.startswith("win") else "./core_c/image_processor.so"
 file = Path(path)
 if not file.is_file():
     compile.compile_lib()
