@@ -1,7 +1,7 @@
 import subprocess
 
 def compile_lib():
-    command = ["make", "-C", "core_c"]
+    command = ["make", "-C", "core_c", "lib"]
     try:
         output = subprocess.run(command, capture_output=True, text=True, check=True)
         print("Compilação concluída")

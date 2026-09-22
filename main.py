@@ -16,9 +16,13 @@ ConvC.convoluteImg.argtypes = [
     ctypes.POINTER(mt.Img_h),
     ctypes.POINTER(mt.Matrix_h)
 ]
+ConvC.convoluteImg.restype = ctypes.POINTER(ctypes.c_ubyte)
 ConvC.defineMatrix.argtypes = [
     ctypes.POINTER(mt.Img_h),
     ctypes.POINTER(mt.Matrix_h)
+]
+ConvC.freeFrame.argtypes = [
+    ctypes.POINTER(ctypes.c_ubyte)
 ]
 
 # declarando handlers
@@ -43,8 +47,8 @@ while True:
     img_h.h, img_h.w, img_h.c = frame.shape
 
     ConvC.defineMatrix(ctypes.byref(img_h), ctypes.byref(kernel_h))
-    ConvC.convoluteImg(ctypes.byref(img_h), ctypes.byref(kernel_h))
-    new_frame = np.ctypeslib.as_array(img_h.data, shape=frame.shape)
+    nf_buffer = ConvC.convoluteImg(ctypes.byref(img_h), ctypes.byref(kernel_h))
+    new_frame = np.ctypeslib.as_array(nf_buffer, shape=frame.shape)
 
     end = time.perf_counter()
     fps = 1 // (end - start)
@@ -52,6 +56,7 @@ while True:
     cv2.putText(new_frame, texto, (50, 50), cv2.FONT_HERSHEY_PLAIN, 0.8, (0, 0, 255), 1)
 
     cv2.imshow(f"Webcam", new_frame)
+    ConvC.freeFrame(nf_buffer)
 
     key = cv2.waitKeyEx(1)
     if key in [2490368, 65362]: # up
