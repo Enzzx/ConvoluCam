@@ -2,7 +2,7 @@ import ctypes, cv2, numpy as np, time, sys
 from pathlib import Path
 import my_types as mt, compile
 
-filters = ["ColorShift", "NegativeColor", "GreyScale", "SobelEdge", "LaplacianEdge", "Emboss", "Identity", "Blur", "Uniform", "MotionBlur", "Sharpen"]
+filters = ["ColorShift", "NegativeColor", "GreyScale", "SobelEdge", "LaplacianEdge", "Emboss", "Identity", "Erosion", "Dilation", "Blur", "Uniform", "MotionBlur", "Sharpen", "KuwaharaFilter"]
 
 # compilando
 path = "./core_c/image_processor.dll" if sys.platform.startswith("win") else "./core_c/image_processor.so"
@@ -72,7 +72,7 @@ while True:
             kernel_h.filter -= 1
 
     elif key in [2555904, 65363]: # right
-        if kernel_h.filter <= 9:
+        if kernel_h.filter <= 12:
             kernel_h.filter += 1
 
     if key == 27:
